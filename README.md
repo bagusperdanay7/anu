@@ -3,8 +3,8 @@
 Note Apps ini adalah sebuah aplikaasi web yang dibuat untuk mencatat keuangan customer dalam kehidupan sehari hari. Tujuan dari projek ini adalah menambahkan portofolio dan meningkatkan skill.
 
 Tim Proyek:
-[Robi Nurhidayat](https://github.com/Robi-Nurhidayat) => Front-End Developer, Project Manager
-[Bagus Perdana Y.](https://github.com/bagusperdanay7) => Back-End Developer
++ [Robi Nurhidayat](https://github.com/Robi-Nurhidayat) => Front-End Developer, Project Manager
++ [Bagus Perdana Y.](https://github.com/bagusperdanay7) => Back-End Developer
 
 #### Back-End Tools:
 - PHP 8.2
@@ -21,8 +21,8 @@ Tim Proyek:
 - Redux
 
 ## Repository
-Back-End : https://github.com/bagusperdanay7/note-apps-be
-Front-End : https://github.com/Robi-Nurhidayat/note-app-frontend
++ Back-End : https://github.com/bagusperdanay7/note-apps-be
++ Front-End : https://github.com/Robi-Nurhidayat/note-app-frontend
 
 ## Lisensi
 
