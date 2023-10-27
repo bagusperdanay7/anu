@@ -1,0 +1,523 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Notes App RESTful API",
+        "version": "1.0",
+        "description": "User API",
+        "termsOfService": "https://www.bncreation.com",
+        "contact": {
+            "name": "Notes App Dev",
+            "email": "baguspyus@gmail.com",
+            "url": "https://www.bncreation.com"
+        },
+        "license": {
+            "name": "APACHE 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "servers": [{
+        "url": "https://notesapp.bncreation.com/api/v1/"
+        }],
+    "tags": [
+        {
+            "name": "User",
+            "description": "Operasi mengenai user"
+        },
+        {
+            "name": "roles",
+            "description": "Operasi mengenai roles"
+        },
+        {
+            "name": "notes",
+            "description": "Operasi mengenai notes"
+        },
+        {
+            "name": "category",
+            "description": "Operasi mengenai category"
+        }
+    ],
+    "paths": {
+        "/users/register": {
+            "post": {
+                "description": "Membuat Akun Pengguna baru (Register)",
+                "summary": "Daftar Pengguna Baru",
+                "tags": ["User"],
+                "requestBody": {
+                    "description": "Mendaftar akun untuk pengguna baru pada note-apps",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/daftarUser"
+                            },
+                            "examples": {
+                                "bagus": {
+                                    "description": "Contoh Daftar pengguna baru dengan username bagus",
+                                    "value": {
+                                        "username": "bagus",
+                                        "name": "Bagus Perdana Yusuf",
+                                        "email": "baguspyus@gmail.com",
+                                        "password": "rahasiaaja"
+                                    }
+                                },
+                                "robi": {
+                                    "description": "Contoh Daftar pengguna baru dengan username robivpersie",
+                                    "value": {
+                                        "username": "robivpersie",
+                                        "name": "Robi Van Persie",
+                                        "email": "robivanpersie@gmail.com",
+                                        "password": "rahasia"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Operasi Register User Berhasil",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "Register User Berhasil",
+                                        "value": {
+                                            "data": {
+                                                "id": 1,
+                                                "username": "baguspyus",
+                                                "name": "Bagus Perdana Yusuf",
+                                                "email": "baguspyus@gmail.com",
+                                                "password": "rahasia"
+                                            }
+                                        }
+                                    }
+                                },
+                                "schema": {
+                                    "$ref": "#/components/schemas/terimaRegisterUser"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validasi Error",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "validationError": {
+                                        "description": "Validasi Error",
+                                        "value": {
+                                            "errors": {
+                                                "username": [
+                                                    "Username tidak boleh kosong",
+                                                    "username minimal 5 karakter"
+                                                ],
+                                                "name": [
+                                                    "name tidak boleh kosong"
+                                                ],
+                                                "email": [
+                                                    "email tidak boleh kosong"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                },
+                                "schema": {
+                                    "$ref": "#/components/schemas/terimaRegisterUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "description": "Login user",
+                "summary": "Login ke aplikasi",
+                "tags": ["User"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/loginUser"
+                            },
+                            "examples": {
+                                "bagus": {
+                                    "description": "Contoh Login akun 1",
+                                    "value": {
+                                        "email": "baguspyus@gmail.com",
+                                        "password": "rahasiaaja"
+                                    }
+                                },
+                                "robi": {
+                                    "description": "Contoh Login akun 2",
+                                    "value": {
+                                        "email": "robivanpersie@gmail.com",
+                                        "password": "rahasia"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login Berhasil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/receiveLoginUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/current": {
+            "get": {
+                "description": "Informasi Akun Pengguna saat ini",
+                "summary": "Rincian Akun Pengguna",
+                "tags": ["User"],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/authorization"
+                    },
+                    {
+                        "$ref": "#/components/parameters/username"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan informasi pengguna",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User tidak ditemukan"
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update Pengguna Saat ini",
+                "summary": "Update User",
+                "tags": ["User"],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/authorization"
+                    },
+                    {
+                        "$ref": "#/components/parameters/username"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update Pengguna Saat Ini",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sukses mengupdate pengguna saat ini",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/logout": {
+            "delete": {
+                "description": "Logout pengguna saat ini",
+                "summary": "Logout",
+                "tags": ["User"],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/authorization"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil logout",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "boolean"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "notesAuth": {
+                "description": "Autentikasi untuk Notes App RESTful API",
+                "type": "apiKey",
+                "in": "header",
+                "name": "X-API-Key"
+            }
+        },
+        "parameters": {
+            "authorization": {
+                "name": "Authorization",
+                "in": "header"
+            },
+            "username": {
+                "name": "username",
+                "in": "path",
+                "description": "Informasi akun yang diakan diambil menggunakan username",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 191
+                },
+                "examples": {
+                    "bagus": {
+                        "description": "Contoh username 1",
+                        "value": "bagus"
+                    },
+                    "robivpersie": {
+                        "description": "Contoh username 2",
+                        "value": "robivpersie"
+                    }
+                }
+            },
+            "todolistId": {
+                "name": "todolistId",
+                "in": "path",
+                "required": true,
+                "description": "Todolist id for update",
+                "schema": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                },
+                "examples": {
+                    "java": {
+                        "description": "Sample todolist id for java",
+                        "value": "1"
+                    },
+                    "php": {
+                        "description": "Sample todolist id for PHP",
+                        "value": "2"
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "daftarUser": {
+                "type": "object",
+                "required": ["username", "name", "email", "password"],
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "maxLength": 191
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 191
+                    },
+                    "email": {
+                        "type": "string",
+                        "maxLength": 191
+                    },
+                    "password": {
+                        "type": "string",
+                        "maxLength": 191
+                    }
+                }
+            },
+            "terimaRegisterUser": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "number"
+                            },
+                            "username": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "password": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "errors": {
+                        "type": "object"
+                    }
+                }
+            },
+            "loginUser": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "Masukkan Email akun"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Masukkan Password akun"
+                    }
+                }
+            },
+            "receiveLoginUser": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "number",
+                                "example": 1
+                            },
+                            "role_id": {
+                                "type": "number",
+                                "example": 1
+                            },
+                            "username": {
+                                "type": "string",
+                                "example": "bagus"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "baguspyus@gmail.com"
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "Bagus Perdana Yusuf"
+                            },
+                            "user_profile": {
+                                "type": "string",
+                                "example": "https://bncreation/cloud/img/bagus.jpg"
+                            },
+                            "alamat": {
+                                "type": "string",
+                                "example": "Perum Prima Sukaharja Blok C2/5"
+                            },
+                            "token (jwt)": {
+                                "type": "string",
+                                "example": "eyJhdWQiOiI4NWEwMzg2Ny1kY2NmAwMDAwMDAwMDEi"
+                            }
+                        }
+                    },
+                    "errors": {
+                        "type": "object"
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "number",
+                                "example": 1
+                            },
+                            "role_id": {
+                                "type": "number",
+                                "example": 2
+                            },
+                            "username": {
+                                "type": "string",
+                                "example": "bagus"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "baguspyus@gmail.com"
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "Bagus Perdana Yusuf"
+                            },
+                            "user_profile": {
+                                "type": "string",
+                                "example": "https://bncreation/cloud/img/bagus.jpg"
+                            },
+                            "alamat": {
+                                "type": "string",
+                                "example": "Perum Prima Sukaharja Blok C2/5"
+                            }
+                        }
+                    },
+                    "errors": {
+                        "type": "object"
+                    }
+                }
+            },
+            "UserUpdate": {
+                "type": "object",
+                "properties": {
+                    "role_id": {
+                        "type": "number",
+                        "format": "int32",
+                        "example": 1
+                    },
+                    "username": {
+                        "type": "string",
+                        "maxLength": 191,
+                        "example": "bagus"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 191,
+                        "example": "Bagus Perdana Yusuf"
+                    },
+                    "email": {
+                        "type": "string",
+                        "maxLength": 191,
+                        "example": "baguspyus@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "maxLength": 191,
+                        "example": "rahasiaaja"
+                    },
+                    "user_profile": {
+                        "type": "string",
+                        "maxLength": 191,
+                        "example": "https://bncreation/cloud/img/bagus.jpg"
+                    },
+                    "alamat": {
+                        "type": "string",
+                        "example": "Perum Prima Sukaharja Blok C2/5"
+                    }
+                }
+            }
+        }
+    }
+}
