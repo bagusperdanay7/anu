@@ -4,6 +4,6 @@
         "title": "API Title",
         "version": "1.0"
     },
-    "servers": [{ "url": "https://api.server.test/v1" }],
+    "servers": [{ "url": "https://note-apps.bncreation.com/api" }],
     "paths": {}
 }
