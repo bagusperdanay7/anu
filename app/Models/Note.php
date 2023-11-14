@@ -21,16 +21,12 @@ class Note extends Model
         'judul',
         'tanggal',
         'keterangan',
-        'harga',
+        'jumlah_pengeluaran',
+        'kategori',
     ];
 
     public function user(): BelongsTo {
         return $this->belongsTo(User::class);
-    }
-
-    public function categories(): BelongsToMany
-    {
-        return $this->belongsToMany(Category::class, 'note_category');
     }
 
 }

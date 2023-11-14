@@ -25,14 +25,13 @@ class UserRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'max:191'],
+            'nama' => ['required', 'max:191'],
             'username' => ['required', 'unique:users,username', 'between:3,191', 'alpha_dash:ascii'],
             'email' => ['required', 'email:dns', 'max:191', 'unique:users,email'],
             'password' => ['required', Password::min(8)->letters()
                                                 ->mixedCase()
                                                 ->numbers()
                                                 ->symbols()
-                                                ->uncompromised()
                         ]
         ];
     }
@@ -40,8 +39,8 @@ class UserRegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Name harus diisi!',
-            'name.max' => 'Name tidak boleh lebih dari :max karakter!',
+            'nama.required' => 'Nama harus diisi!',
+            'nama.max' => 'Nama tidak boleh lebih dari :max karakter!',
             'username.required' => 'Username harus diisi!',
             'username.unique' => 'Username telah digunakan!',
             'username.between' => 'Username tidak boleh kurang dari :min dan lebih dari :max karakter!',
@@ -54,7 +53,6 @@ class UserRegisterRequest extends FormRequest
                 'mixed' => 'Password harus berisi setidaknya satu huruf besar dan satu huruf kecil.',
                 'numbers' => 'Password harus berisi setidaknya satu angka.',
                 'symbols' => 'Password harus berisi setidaknya satu simbol.',
-                'uncompromised' => 'Password yang anda masukkan muncul dalam kebocoran data. Sebaiknya masukkan password yang berbeda.',
             ]
         ];
     }

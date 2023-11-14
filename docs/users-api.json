@@ -24,16 +24,8 @@
             "description": "Operasi mengenai user"
         },
         {
-            "name": "roles",
-            "description": "Operasi mengenai roles"
-        },
-        {
             "name": "notes",
             "description": "Operasi mengenai notes"
-        },
-        {
-            "name": "category",
-            "description": "Operasi mengenai category"
         }
     ],
     "paths": {
@@ -54,18 +46,18 @@
                                     "description": "Contoh Daftar pengguna baru dengan username bagus",
                                     "value": {
                                         "username": "bagus",
-                                        "name": "Bagus Perdana Yusuf",
+                                        "nama": "Bagus Perdana Yusuf",
                                         "email": "baguspyus@gmail.com",
-                                        "password": "rahasiaaja"
+                                        "password": "Passwordbagus1!"
                                     }
                                 },
                                 "robi": {
                                     "description": "Contoh Daftar pengguna baru dengan username robivpersie",
                                     "value": {
                                         "username": "robivpersie",
-                                        "name": "Robi Van Persie",
+                                        "nama": "Robi Van Persie",
                                         "email": "robivanpersie@gmail.com",
-                                        "password": "rahasia"
+                                        "password": "Robivan12!"
                                     }
                                 }
                             }
@@ -84,7 +76,7 @@
                                             "data": {
                                                 "id": 1,
                                                 "username": "baguspyus",
-                                                "name": "Bagus Perdana Yusuf",
+                                                "nama": "Bagus Perdana Yusuf",
                                                 "email": "baguspyus@gmail.com",
                                                 "password": "rahasia"
                                             }
@@ -107,11 +99,10 @@
                                         "value": {
                                             "errors": {
                                                 "username": [
-                                                    "Username tidak boleh kosong",
-                                                    "username minimal 5 karakter"
+                                                    "Username tidak boleh kosong"
                                                 ],
-                                                "name": [
-                                                    "name tidak boleh kosong"
+                                                "nama": [
+                                                    "nama tidak boleh kosong"
                                                 ],
                                                 "email": [
                                                     "email tidak boleh kosong"
@@ -169,6 +160,28 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Login Gagal",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Login Gagal": {
+                                        "description": "Login Gagal",
+                                        "value": {
+                                            "errors": {
+                                                "message": [
+                                                    "Email atau Password salah!, Silahkan Periksa Kembali"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                },
+                                "schema": {
+                                    "$ref": "#/components/schemas/receiveLoginUser"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -184,6 +197,11 @@
                     },
                     {
                         "$ref": "#/components/parameters/username"
+                    }
+                ],
+                "security": [
+                    {
+                        "bearerAuth": "bearer"
                     }
                 ],
                 "responses": {
@@ -278,6 +296,11 @@
                 "type": "apiKey",
                 "in": "header",
                 "name": "X-API-Key"
+            },
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
         },
         "parameters": {
@@ -331,13 +354,13 @@
         "schemas": {
             "daftarUser": {
                 "type": "object",
-                "required": ["username", "name", "email", "password"],
+                "required": ["username", "nama", "email", "password"],
                 "properties": {
                     "username": {
                         "type": "string",
                         "maxLength": 191
                     },
-                    "name": {
+                    "nama": {
                         "type": "string",
                         "maxLength": 191
                     },
@@ -363,7 +386,7 @@
                             "username": {
                                 "type": "string"
                             },
-                            "name": {
+                            "nama": {
                                 "type": "string"
                             },
                             "email": {
@@ -403,10 +426,6 @@
                                 "type": "number",
                                 "example": 1
                             },
-                            "role_id": {
-                                "type": "number",
-                                "example": 1
-                            },
                             "username": {
                                 "type": "string",
                                 "example": "bagus"
@@ -415,21 +434,21 @@
                                 "type": "string",
                                 "example": "baguspyus@gmail.com"
                             },
-                            "name": {
+                            "nama": {
                                 "type": "string",
                                 "example": "Bagus Perdana Yusuf"
                             },
                             "user_profile": {
                                 "type": "string",
-                                "example": "https://bncreation/cloud/img/bagus.jpg"
+                                "example": "avatar.jpg"
                             },
                             "alamat": {
                                 "type": "string",
                                 "example": "Perum Prima Sukaharja Blok C2/5"
                             },
-                            "token (jwt)": {
+                            "role": {
                                 "type": "string",
-                                "example": "eyJhdWQiOiI4NWEwMzg2Ny1kY2NmAwMDAwMDAwMDEi"
+                                "example": "user"
                             }
                         }
                     },
@@ -448,10 +467,6 @@
                                 "type": "number",
                                 "example": 1
                             },
-                            "role_id": {
-                                "type": "number",
-                                "example": 2
-                            },
                             "username": {
                                 "type": "string",
                                 "example": "bagus"
@@ -460,7 +475,7 @@
                                 "type": "string",
                                 "example": "baguspyus@gmail.com"
                             },
-                            "name": {
+                            "nama": {
                                 "type": "string",
                                 "example": "Bagus Perdana Yusuf"
                             },
@@ -471,6 +486,10 @@
                             "alamat": {
                                 "type": "string",
                                 "example": "Perum Prima Sukaharja Blok C2/5"
+                            },
+                            "role": {
+                                "type": "string",
+                                "example": "user"
                             }
                         }
                     },
@@ -482,17 +501,12 @@
             "UserUpdate": {
                 "type": "object",
                 "properties": {
-                    "role_id": {
-                        "type": "number",
-                        "format": "int32",
-                        "example": 1
-                    },
                     "username": {
                         "type": "string",
                         "maxLength": 191,
                         "example": "bagus"
                     },
-                    "name": {
+                    "nama": {
                         "type": "string",
                         "maxLength": 191,
                         "example": "Bagus Perdana Yusuf"
@@ -515,6 +529,10 @@
                     "alamat": {
                         "type": "string",
                         "example": "Perum Prima Sukaharja Blok C2/5"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "user"
                     }
                 }
             }

@@ -45,7 +45,7 @@ class AuthController extends Controller
                 throw new HttpResponseException(response([
                 "errors" => [
                     "message" => [
-                        "Username atau Password Salah, Silahkan Periksa Kembali!"
+                        "Email atau Password Salah, Silahkan Periksa Kembali!"
                     ]
                 ]
             ], 401));

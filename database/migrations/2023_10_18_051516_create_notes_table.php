@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('judul');
             $table->date('tanggal');
             $table->text('keterangan')->nullable();
-            $table->integer('harga');
+            $table->integer('jumlah_pengeluaran');
+            $table->string('kategori', 50);
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
