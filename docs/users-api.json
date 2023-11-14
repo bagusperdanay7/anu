@@ -16,7 +16,7 @@
         }
     },
     "servers": [{
-        "url": "https://notesapp.bncreation.com/api/v1/"
+        "url": "https://note-apps.bncreation.com/api/"
         }],
     "tags": [
         {

@@ -29,7 +29,7 @@ Tim Proyek:
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ### Run Laravel
-Klona Repository Klona Repository Ke Komputer Local / Server
+Klona Repository Ke Komputer Local / Server
 ```bash
 git clone https://github.com/bagusperdanay7/note-apps-be
 ```
